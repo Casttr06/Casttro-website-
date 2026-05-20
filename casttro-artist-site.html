@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CASTTRO — Artist Website</title>
+  <meta name="description" content="Official site for CASTTRO. Music, visuals, shows, and bookings." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem;
+      --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem; --space-16: 4rem; --space-24: 6rem;
+      --radius-sm: 0.375rem; --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: 'Anton', Impact, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --color-bg: #090909; --color-surface: #111111; --color-surface-2:#161616; --color-border: rgba(255,244,236,.12);
+      --color-text: #f4ede7; --color-muted: #c3b4aa; --color-faint: #8f8077;
+      --color-primary: #b5121b; --color-primary-2: #ea2a35; --color-card: rgba(12,12,12,.74);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.28); --shadow-md: 0 18px 50px rgba(0,0,0,.34);
+      --content: 1180px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;overflow-x:hidden}
+    img,video{display:block;max-width:100%;height:auto}
+    a{text-decoration:none;color:inherit}
+    button,input,textarea,select{font:inherit;color:inherit}
+    button{background:none;border:none;cursor:pointer}
+    :focus-visible{outline:2px solid var(--color-primary-2);outline-offset:3px;border-radius:var(--radius-sm)}
+    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto}
+    .section{padding:clamp(var(--space-12),8vw,var(--space-24)) 0}
+    .eyebrow{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.26em;text-transform:uppercase;color:var(--color-primary-2);display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}
+    .eyebrow::before{content:"";width:2rem;height:1px;background:currentColor}
+    .headline{font-family:var(--font-display);font-size:var(--text-2xl);line-height:.95;text-transform:uppercase;max-width:11ch}
+    .lede{max-width:64ch;color:var(--color-muted);margin-top:var(--space-4)}
+    .header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(8,8,8,.78);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:var(--transition)}
+    .header.scrolled{background:rgba(8,8,8,.94);border-color:var(--color-border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4) 0}
+    .logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);letter-spacing:.05em;text-transform:uppercase}
+    .logo img{width:1.9rem;height:1.9rem;object-fit:contain;filter:brightness(1.12) contrast(1.15)}
+    .nav-links{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center}
+    .nav-links a{font-size:var(--text-sm);color:var(--color-muted)}
+    .nav-links a:hover,.nav-links a.active{color:var(--color-text)}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.9rem 1.2rem;border-radius:var(--radius-full);transition:var(--transition);border:1px solid transparent;font-weight:600}
+    .button-primary{background:var(--color-primary);color:#fff;box-shadow:var(--shadow-sm)}
+    .button-primary:hover{background:var(--color-primary-2);transform:translateY(-1px)}
+    .button-ghost{background:rgba(10,10,10,.38);border-color:rgba(244,237,231,.16);color:var(--color-text);backdrop-filter:blur(10px)}
+    .button-ghost:hover{border-color:rgba(244,237,231,.34);background:rgba(10,10,10,.54)}
+    .hero{position:relative;min-height:100svh;display:grid;align-items:end;overflow:hidden;background:#050505}
+    .hero video,.hero .hero-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .hero .hero-poster{display:none}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg, rgba(3,3,3,.9) 0%, rgba(3,3,3,.68) 42%, rgba(3,3,3,.34) 70%, rgba(3,3,3,.54) 100%), linear-gradient(180deg, rgba(3,3,3,.42) 0%, rgba(3,3,3,.18) 36%, rgba(3,3,3,.9) 100%)}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0, 760px) 1fr;gap:var(--space-8);padding:8.5rem 0 var(--space-12)}
+    .hero-kicker{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.28em;text-transform:uppercase;color:rgba(244,237,231,.72);margin-bottom:var(--space-4)}
+    .hero h1{font-family:var(--font-display);font-size:clamp(4rem, 14vw, 10rem);line-height:.84;text-transform:uppercase;max-width:7ch;color:#f6efe8;text-shadow:0 10px 30px rgba(0,0,0,.3)}
+    .hero-copy{max-width:56ch;margin-top:var(--space-5);color:rgba(244,237,231,.92);font-size:clamp(1.02rem,.98rem + .35vw,1.22rem)}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-6)}
+    .hero-card,.card{padding:var(--space-6);border:1px solid var(--color-border);border-radius:var(--radius-xl);background:var(--color-card);backdrop-filter:blur(16px);box-shadow:var(--shadow-md)}
+    .hero-card{align-self:end;justify-self:end;max-width:360px}
+    .meta-list{display:grid;gap:var(--space-4)}
+    .meta-row small{display:block;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;color:var(--color-faint);margin-bottom:.35rem}
+    .meta-row strong{font-size:var(--text-lg);font-weight:700}
+    .split,.proof-grid,.contact-grid,.showcase{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:start}
+    .manifesto{background:linear-gradient(180deg,#0b0b0b,#090909)}
+    .portrait-panel,.feature-media,.live-block,.gallery-grid figure{overflow:hidden;border-radius:var(--radius-xl);border:1px solid var(--color-border);background:var(--color-surface);box-shadow:var(--shadow-md)}
+    .portrait-panel img{width:100%;aspect-ratio:3/4;object-fit:cover}
+    .feature-media img{width:100%;aspect-ratio:16/10;object-fit:cover}
+    .quote{font-family:var(--font-display);font-size:var(--text-xl);line-height:1.02;text-transform:uppercase}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--color-border);border-radius:var(--radius-xl);overflow:hidden;margin-top:var(--space-8)}
+    .stat{background:var(--color-surface);padding:var(--space-6)}
+    .stat strong{display:block;font-family:var(--font-display);font-size:clamp(2rem,5vw,4rem);line-height:.9;color:var(--color-primary-2)}
+    .stat span{display:block;margin-top:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.16em;text-transform:uppercase;color:var(--color-muted)}
+    .feature-body{padding:var(--space-6)}
+    .label{display:inline-flex;align-items:center;padding:.45rem .8rem;border:1px solid var(--color-border);border-radius:var(--radius-full);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted)}
+    .stream-links,.social-grid{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-5)}
+    .pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.8rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius-full);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--color-text)}
+    .pill:hover{border-color:var(--color-primary-2);color:var(--color-primary-2)}
+    .gallery-grid{display:grid;grid-template-columns:1.15fr .85fr .85fr;grid-auto-rows:260px;gap:var(--space-3);margin-top:var(--space-8)}
+    .gallery-grid img,.live-block img{width:100%;height:100%;object-fit:cover}
+    .gallery-grid figure:nth-child(1){grid-row:span 2}
+    .gallery-grid figure:nth-child(4){grid-column:span 2}
+    .gallery-grid figcaption{position:absolute;left:var(--space-4);bottom:var(--space-4);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.16em;text-transform:uppercase;background:rgba(8,8,8,.72);padding:.4rem .6rem;border-radius:var(--radius-full)}
+    .show-list{display:grid;gap:1px;background:var(--color-border);border-radius:var(--radius-xl);overflow:hidden}
+    .show-row{display:grid;grid-template-columns:140px 1fr auto;gap:var(--space-4);align-items:center;padding:var(--space-5);background:var(--color-surface)}
+    .show-date{font-family:var(--font-display);font-size:var(--text-xl);line-height:.9;color:var(--color-primary-2)}
+    .show-date small{display:block;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.16em;color:var(--color-muted);margin-top:.3rem}
+    .contact-details{display:grid;gap:var(--space-4)}
+    .contact-details small{display:block;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;color:var(--color-faint);margin-bottom:.3rem}
+    form{display:grid;gap:var(--space-4)}
+    label{display:grid;gap:.45rem;font-size:var(--text-sm);font-weight:600}
+    input,textarea,select{min-height:48px;padding:.9rem 1rem;border-radius:var(--radius-lg);border:1px solid var(--color-border);background:rgba(255,255,255,.03);color:var(--color-text)}
+    textarea{min-height:140px;resize:vertical}
+    .form-note{font-size:var(--text-sm);color:var(--color-muted)}
+    .footer{padding:var(--space-8) 0 var(--space-12);border-top:1px solid var(--color-border)}
+    .footer-grid{display:flex;justify-content:space-between;gap:var(--space-4);align-items:end}
+    .footer-tag{font-family:var(--font-display);font-size:clamp(2.8rem,10vw,7rem);line-height:.85;text-transform:uppercase;color:var(--color-primary)}
+    .footer-note{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;color:var(--color-faint);max-width:42ch;text-align:right}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    @media (max-width:1024px){.hero-grid,.split,.proof-grid,.contact-grid,.showcase{grid-template-columns:1fr}.hero-card{justify-self:start;max-width:100%}.gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:220px}.gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4){grid-column:auto;grid-row:auto}.stats{grid-template-columns:1fr}.show-row{grid-template-columns:1fr}}
+    @media (max-width:760px){.nav{flex-direction:column;align-items:flex-start}.hero-grid{padding-top:9.5rem}.hero h1{font-size:clamp(3.5rem,18vw,6rem)}.gallery-grid{grid-template-columns:1fr}.footer-grid{flex-direction:column;align-items:flex-start}.footer-note{text-align:left}.hero-actions,.stream-links,.social-grid{flex-direction:column;align-items:stretch}.button,.pill{width:100%}.hero .hero-poster{display:block}.hero video{display:none}}
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container nav">
+      <a class="logo" href="#top" aria-label="CASTTRO home">
+        <img src="./assets/logo.jpg" alt="CASTTRO logo"><span>CASTTRO</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#manifesto">About</a><a href="#music">Music</a><a href="#proof">Proof</a><a href="#visuals">Visuals</a><a href="#shows">Shows</a><a href="#contact">Contact</a>
+      </nav>
+      <a class="button button-ghost" href="#music">Latest drop</a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" id="top">
+      <video autoplay muted loop playsinline preload="metadata" poster="./assets/hero-fallback.jpg" aria-hidden="true"><source src="./assets/hero-loop.mp4" type="video/mp4"></video>
+      <img class="hero-poster" src="./assets/hero-fallback.jpg" alt="CASTTRO hero portrait fallback" loading="eager" width="768" height="1024">
+      <div class="hero-overlay"></div>
+      <div class="container hero-grid">
+        <div class="reveal">
+          <p class="hero-kicker">Perth, Western Australia · Independent hip-hop artist</p>
+          <h1>It’s not a mask. It’s a mirror.</h1>
+          <p class="hero-copy">CASTTRO makes raw, cinematic hip-hop built on tension, clarity, and self-reflection. The sound leans dark and melodic, but every record is built to hit with intent instead of just atmosphere.</p>
+          <div class="hero-actions"><a class="button button-primary" href="https://open.spotify.com/artist/4NW8LPvWkZ3dycMZaB59JB" target="_blank" rel="noopener noreferrer">Listen on Spotify</a><a class="button button-ghost" href="#contact">Book CASTTRO</a></div>
+        </div>
+        <aside class="hero-card reveal"><div class="meta-list"><div class="meta-row"><small>Current focus</small><strong>Rolling out stronger records, sharper visuals, and live opportunities.</strong></div><div class="meta-row"><small>Sound</small><strong>Moody production, sharp lyricism, and melodic pressure.</strong></div><div class="meta-row"><small>Built for</small><strong>Promoters, curators, collaborators, and listeners who want substance.</strong></div></div></aside>
+      </div>
+    </section>
+    <section class="section manifesto" id="manifesto"><div class="container split"><div class="reveal"><div class="eyebrow">Artist statement</div><h2 class="headline">Built from pressure, not performance.</h2><p class="lede">CASTTRO is an independent artist out of Perth creating hip-hop that feels lived-in, not manufactured. The writing moves through identity, ambition, doubt, and growth without losing the weight that makes the music replayable.</p><p class="lede">The mask is part of the language, but not as a gimmick. It represents reflection, distortion, and the version of yourself you only meet when everything gets quiet. That is why the line stays the same: it’s not a mask, it’s a mirror.</p><div class="card" style="margin-top:var(--space-6)"><p class="quote">Every track should leave a bruise and a thought.</p></div><div class="stats"><div class="stat"><strong>01</strong><span>Distinct identity</span></div><div class="stat"><strong>02</strong><span>Live-ready presence</span></div><div class="stat"><strong>03</strong><span>Strong visual world</span></div></div></div><div class="portrait-panel reveal"><img src="./assets/about-portrait.jpg" alt="Black and white portrait of CASTTRO in a leather jacket" width="768" height="1024" loading="lazy"></div></div></section>
+    <section class="section" id="music"><div class="container proof-grid"><div class="reveal"><div class="eyebrow">Music</div><h2 class="headline">Start with the record that says the most.</h2><p class="lede">The first listen should tell people exactly what CASTTRO is about. This section is built to push one clear entry point instead of drowning new listeners in too many choices at once.</p></div><div class="card reveal"><h3 style="font-size:var(--text-lg)">Current release focus</h3><p class="lede" style="margin-top:var(--space-3)">Lead with the track or visual that best captures the pressure, confidence, and self-reflection at the center of the project. When a new release lands, this is the first section that should change.</p></div></div><div class="container" style="margin-top:var(--space-8)"><article class="feature-media reveal"><img src="./assets/gallery-2.jpg" alt="Studio image of CASTTRO at a microphone" width="800" height="800" loading="lazy"><div class="feature-body"><span class="label">Featured release</span><h3 style="font-size:var(--text-xl);margin-top:var(--space-4)">A strong first listen for new people discovering the name.</h3><p class="lede" style="margin-top:var(--space-3)">The goal here is simple: one release, one reason it matters, one click. Keep this section updated with the latest single, performance clip, or visual that feels most complete.</p><div class="stream-links"><a class="pill" href="https://open.spotify.com/artist/4NW8LPvWkZ3dycMZaB59JB" target="_blank" rel="noopener noreferrer">Spotify</a><a class="pill" href="https://youtube.com/@casttroofficial?si=evI0N84bAObe1pWe" target="_blank" rel="noopener noreferrer">YouTube</a><a class="pill" href="https://soundcloud.com/casttro-376242194" target="_blank" rel="noopener noreferrer">SoundCloud</a><a class="pill" href="https://casttr0.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a><a class="pill" href="https://www.tiktok.com/@officialcasttro" target="_blank" rel="noopener noreferrer">TikTok</a></div></div></article></div></section>
+    <section class="section" id="proof"><div class="container proof-grid"><div class="reveal"><div class="eyebrow">Momentum</div><h2 class="headline">Early proof, real signals.</h2><p class="lede">This section shows that the project already has traction without trying to overstate it. The point is to give promoters, media, and potential collaborators enough confidence to keep reading and listening.</p><div class="card" style="margin-top:var(--space-6)"><ul style="padding-left:1.1rem;display:grid;gap:.55rem;color:var(--color-muted)"><li>Triple J Unearthed feature</li><li>Complex AU acclaim wildcard</li><li>Red Bull Bodega Collective</li><li>WAM Awards finalist</li><li>Cabinet Noir cypher / 16 Bars moments</li></ul></div></div><div class="feature-media reveal"><img src="./assets/proof-live.jpg" alt="CASTTRO performing live with a microphone under red and blue lights" width="768" height="1024" loading="lazy"></div></div></section>
+    <section class="section" id="visuals"><div class="container reveal"><div class="eyebrow">Visual world</div><h2 class="headline">The imagery should hold the same weight as the bars.</h2><p class="lede">The visuals around CASTTRO are not filler. They help shape the world of the music and give people something recognisable to attach to the name beyond a single track.</p></div><div class="container gallery-grid reveal"><figure><img src="./assets/gallery-1.jpg" alt="Editorial collage image of CASTTRO in an industrial space" width="768" height="1365" loading="lazy"><figcaption>Editorial world</figcaption></figure><figure><img src="./assets/gallery-2.jpg" alt="Studio microphone image of CASTTRO recording" width="800" height="800" loading="lazy"><figcaption>Studio</figcaption></figure><figure><img src="./assets/gallery-3.jpg" alt="Portrait of CASTTRO in front of graffiti" width="768" height="1024" loading="lazy"><figcaption>Identity</figcaption></figure><figure><img src="./assets/hero-fallback.jpg" alt="Blue-lit portrait of CASTTRO crouching in a studio" width="768" height="1024" loading="lazy"><figcaption>Blue room</figcaption></figure></div></section>
+    <section class="section" id="shows"><div class="container reveal"><div class="eyebrow">Shows</div><h2 class="headline">Ready for bookings and live opportunities.</h2><p class="lede">Even when the calendar is still building, this section should make it clear that CASTTRO is available for the right performance slots, support sets, and curated appearances.</p></div><div class="container showcase"><div class="show-list reveal"><article class="show-row"><div class="show-date">Now<small>Booking open</small></div><div><h3 style="font-size:var(--text-lg)">Festival, support, and independent headline enquiries</h3><p style="color:var(--color-muted)">Perth-based and available for live bookings, curated performances, media appearances, and select collaborations.</p></div><a class="button button-ghost" href="#contact">Enquire</a></article><article class="show-row"><div class="show-date">Next<small>Campaign slot</small></div><div><h3 style="font-size:var(--text-lg)">Next confirmed show or release event goes here</h3><p style="color:var(--color-muted)">Once a date is locked, replace this row with the venue, city, ticket link, and one short line that makes people move on it.</p></div><a class="button button-primary" href="#contact">Hold date</a></article></div><div class="live-block reveal"><img src="./assets/shows-live.jpg" alt="CASTTRO performing in front of a crowd at Cabinet Noir" width="1152" height="768" loading="lazy"></div></div></section>
+    <section class="section" id="contact"><div class="container contact-grid"><div class="reveal"><div class="eyebrow">Contact</div><h2 class="headline">Direct contact, no friction.</h2><p class="lede">For bookings, collaborations, press, or media, the easiest route should always be obvious. This section keeps the email visible while still giving people a clean enquiry form to start the conversation.</p><div class="card" style="margin-top:var(--space-6)"><div class="contact-details"><div><small>Email</small><strong><a href="mailto:castronxg@gmail.com">castronxg@gmail.com</a></strong></div><div><small>Base</small><strong>Perth, Western Australia</strong></div><div><small>For</small><strong>Bookings, collaborations, press, media</strong></div></div><div class="social-grid"><a class="pill" href="https://youtube.com/@casttroofficial?si=evI0N84bAObe1pWe" target="_blank" rel="noopener noreferrer">YouTube</a><a class="pill" href="https://open.spotify.com/artist/4NW8LPvWkZ3dycMZaB59JB" target="_blank" rel="noopener noreferrer">Spotify</a><a class="pill" href="https://www.tiktok.com/@officialcasttro" target="_blank" rel="noopener noreferrer">TikTok</a><a class="pill" href="https://soundcloud.com/casttro-376242194" target="_blank" rel="noopener noreferrer">SoundCloud</a></div></div></div><div class="card reveal"><h3 style="font-size:var(--text-lg);margin-bottom:var(--space-3)">Booking form</h3><form id="contactForm"><label>Name<input id="name" type="text" placeholder="Your name"></label><label>Email<input id="email" type="email" placeholder="you@example.com"></label><label>Inquiry type<select id="inquiry"><option>Booking</option><option>Collaboration</option><option>Press / media</option><option>General</option></select></label><label>Message<textarea id="message" placeholder="Tell me what you need, where, and when."></textarea></label><button type="submit" class="button button-primary">Open email draft</button><p class="form-note">This opens your email app with the enquiry filled in. We can swap this to Formspree later for direct website submissions.</p></form></div></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-grid"><div><p class="footer-tag">CASTTRO</p><p style="margin-top:var(--space-3);color:var(--color-muted)">It’s not a mask. It’s a mirror.</p></div><p class="footer-note">Built to give new listeners a clear entry point and give promoters one place to check the story, the sound, the visuals, and the contact.</p></div></footer>
+  <script>
+    const header=document.getElementById('header');
+    const links=[...document.querySelectorAll('.nav-links a')];
+    const sections=links.map(link=>document.querySelector(link.getAttribute('href'))).filter(Boolean);
+    const reveals=document.querySelectorAll('.reveal');
+    const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:.12});
+    reveals.forEach(el=>revealObserver.observe(el));
+    const navObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{const id='#'+entry.target.id;const link=links.find(a=>a.getAttribute('href')===id);if(entry.isIntersecting){links.forEach(a=>a.classList.remove('active'));link?.classList.add('active');}});},{rootMargin:'-35% 0px -45% 0px',threshold:0});
+    sections.forEach(section=>navObserver.observe(section));
+    window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>8),{passive:true});
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const email=document.getElementById('email').value.trim();
+      const inquiry=document.getElementById('inquiry').value;
+      const message=document.getElementById('message').value.trim();
+      const subject=encodeURIComponent('CASTTRO Website Enquiry — ' + inquiry);
+      const body=encodeURIComponent('Name: ' + name + '
+Email: ' + email + '
+Inquiry: ' + inquiry + '
+
+Message:
+' + message);
+      window.location.href='mailto:castronxg@gmail.com?subject='+subject+'&body='+body;
+    });
+  </script>
+</body>
+</html>
