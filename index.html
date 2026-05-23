@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CASTTRO — It’s Not a Mask</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -66,7 +65,7 @@
       font-size:1.25rem;
       letter-spacing:0.22em;
       text-transform:uppercase;
-      color:#f03b36; /* red text inside header */
+      color:#f03b36;
     }
 
     .nav {
@@ -75,14 +74,28 @@
       font-size:0.9rem;
     }
     .nav a {
+      position:relative;
       color:#f0f0f0;
       opacity:0.8;
       text-transform:uppercase;
       letter-spacing:0.14em;
       font-size:0.8rem;
     }
+    .nav a::after {
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:1px;
+      background:#f03b36;
+      transition:width 0.25s ease;
+    }
     .nav a:hover {
       opacity:1;
+    }
+    .nav a:hover::after {
+      width:100%;
     }
 
     .pill-cta {
@@ -110,7 +123,19 @@
       grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
       gap:3rem;
       align-items:center;
+      overflow:hidden;
     }
+    .hero::before {
+      content:"";
+      position:absolute;
+      left:0;
+      top:10%;
+      bottom:10%;
+      width:3px;
+      background:linear-gradient(to bottom,#f03b36,transparent);
+      opacity:0.7;
+    }
+
     .hero-video-wrap {
       position:relative;
       border-radius:18px;
@@ -118,17 +143,21 @@
       border:1px solid rgba(255,255,255,0.12);
       box-shadow:0 24px 80px rgba(0,0,0,0.9);
     }
+    .hero-video-inner {
+      position:relative;
+    }
     .hero video {
       width:100%;
       height:100%;
       display:block;
       object-fit:cover;
-      filter:brightness(0.75);
+      filter:brightness(0.8);
     }
     .hero-overlay {
       position:absolute;
       inset:0;
       background:radial-gradient(circle at center,rgba(0,0,0,0.25) 0,rgba(0,0,0,0.75) 65%);
+      pointer-events:none;
     }
     .hero-tag {
       position:absolute;
@@ -140,6 +169,17 @@
       font-size:0.7rem;
       letter-spacing:0.16em;
       text-transform:uppercase;
+    }
+
+    /* YOUR ORNAMENT ON RIGHT SIDE */
+    .hero-corner-ornament {
+      position:absolute;
+      right:0;
+      bottom:0;
+      width:26%;
+      aspect-ratio:1 / 1;
+      background:url("./assets/hero-corner-right.png") bottom right / contain no-repeat;
+      pointer-events:none;
     }
 
     .hero-copy h1 {
@@ -191,7 +231,7 @@
       color:#b0b0b0;
     }
 
-    /* SECTIONS */
+    /* GENERIC SECTION STYLES (kept simple) */
     .section {
       padding:3.5rem 5vw 0;
       max-width:1120px;
@@ -199,14 +239,15 @@
     }
     .section h2 {
       font-family:'Kanit',system-ui,sans-serif;
-      font-size:1.3rem;
+      font-size:0.8rem;
       text-transform:uppercase;
-      letter-spacing:0.2em;
+      letter-spacing:0.28em;
       color:#f03b36;
       margin-bottom:0.6rem;
+      opacity:0.9;
     }
     .section-heading-sub {
-      font-size:1.9rem;
+      font-size:2rem;
       font-weight:600;
       margin-bottom:1.25rem;
     }
@@ -239,6 +280,12 @@
       padding:1.4rem;
       background:rgba(255,255,255,0.03);
       border:1px solid rgba(255,255,255,0.1);
+      transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .music-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 18px 40px rgba(0,0,0,0.9);
+      border-color:rgba(240,59,54,0.6);
     }
     .music-card h3 {
       font-size:1.05rem;
@@ -262,6 +309,13 @@
       position:relative;
       border-radius:12px;
       overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .gallery-item:hover {
+      transform:translateY(-6px);
+      box-shadow:0 18px 40px rgba(0,0,0,0.9);
+      border-color:rgba(240,59,54,0.6);
     }
     .gallery-item img {
       width:100%;
@@ -332,13 +386,13 @@
       }
       .hero-video-wrap { order:2; }
       .hero-copy { order:1; }
-      .about-grid {
-        grid-template-columns:minmax(0,1fr);
-      }
-      .nav { display:none; } /* simple: hide nav links on small screens for now */
+      .nav { display:none; }
       .footer {
         flex-direction:column;
         align-items:flex-start;
+      }
+      .hero-corner-ornament {
+        width:40%;
       }
     }
   </style>
@@ -349,8 +403,7 @@
   <header class="header">
     <div class="header-left">
       <div class="logo-mark">
-        <!-- swap src to one of your CT logos -->
-        <img src="./assets/logo-ct.png" alt="CASTTRO logo" loading="lazy">
+        <img src="./assets/logo.jpg" alt="CASTTRO logo" loading="lazy">
       </div>
       <div class="wordmark">CASTTRO</div>
     </div>
@@ -370,17 +423,20 @@
   <main>
     <section class="hero" id="top">
       <div class="hero-video-wrap">
-        <video autoplay muted loop playsinline poster="./assets/hero-fallback.jpg">
-          <source src="./assets/WEBSITE-VID.mp4" type="video/mp4">
-        </video>
+        <div class="hero-video-inner">
+          <video autoplay muted loop playsinline poster="./assets/hero-fallback.jpg">
+            <source src="./assets/WEBSITE-VID.mp4" type="video/mp4">
+          </video>
+          <div class="hero-corner-ornament"></div>
+        </div>
         <div class="hero-overlay"></div>
         <div class="hero-tag">It’s not a mask — it’s a mirror</div>
       </div>
       <div class="hero-copy">
         <h1><span>CASTTRO.</span> PERTH.</h1>
-        <div class="hero-line">Perth, Western Australia · Independent hip‑hop</div>
+        <div class="hero-line">Perth, Western Australia · Independent hip-hop</div>
         <p>
-          Razor‑sharp bars, late‑night sessions, and a mask that reflects more than it hides.
+          Razor-sharp bars, late-night sessions, and a mask that reflects more than it hides.
           CASTTRO turns real stories into heavy, cinematic rap from the Perth underground.
         </p>
         <div class="hero-actions">
@@ -392,13 +448,14 @@
       </div>
     </section>
 
+    <!-- The rest of the sections stay basically as before; you can tweak content later -->
     <section class="section" id="about">
       <h2>About</h2>
       <div class="section-heading-sub">It’s not a mask — it’s a mirror.</div>
       <div class="about-grid">
         <div>
           <p>
-            CASTTRO is a Perth-based hip‑hop artist turning pressure into performance.
+            CASTTRO is a Perth-based hip-hop artist turning pressure into performance.
             The music sits somewhere between raw confession and calculated warfare —
             equal parts vulnerability and flex.
           </p>
@@ -409,7 +466,6 @@
           </p>
         </div>
         <div class="about-img-wrap">
-          <!-- swap src to your favourite portrait -->
           <img src="./assets/about-portrait.jpg" alt="CASTTRO performing live" loading="lazy">
         </div>
       </div>
@@ -427,7 +483,7 @@
           <div class="music-meta">Singles · YouTube</div>
           <h3>Latest drops</h3>
           <p>
-            Tap into the newest CASTTRO tracks — straight from late‑night sessions to your feed.
+            Tap into the newest CASTTRO tracks — straight from late-night sessions to your feed.
           </p>
           <br>
           <a href="https://youtube.com/@casttroofficial?si=evI0N84bAObe1pWe" target="_blank" rel="noopener noreferrer"
@@ -460,7 +516,6 @@
         proves itself. Clips don’t just show the crowd — they show control.
       </p>
       <div style="margin-top:1.8rem;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);max-width:720px;">
-        <!-- swap src to your favourite live shot -->
         <img src="./assets/proof-live.jpg" alt="CASTTRO live on stage with crowd" loading="lazy" style="width:100%;display:block;">
       </div>
     </section>
@@ -473,9 +528,9 @@
         Visuals turn every drop into a scene, not just a song.
       </p>
       <div class="gallery-grid">
-        <div class="gallery-item"><img src="./assets/gallery-1.jpg" alt="Crowd reacting at a show" loading="lazy"></div>
-        <div class="gallery-item"><img src="./assets/gallery-2.jpg" alt="CASTTRO on stage" loading="lazy"></div>
-        <div class="gallery-item"><img src="./assets/gallery-3.jpg" alt="Studio session" loading="lazy"></div>
+        <div class="gallery-item"><img src="./assets/gallery-1.jpg" alt="Visual 1" loading="lazy"></div>
+        <div class="gallery-item"><img src="./assets/gallery-2.jpg" alt="Visual 2" loading="lazy"></div>
+        <div class="gallery-item"><img src="./assets/gallery-3.jpg" alt="Visual 3" loading="lazy"></div>
         <div class="gallery-item"><img src="./assets/gallery-4.jpg" alt="CASTTRO mask visual" loading="lazy"></div>
       </div>
     </section>
@@ -484,7 +539,7 @@
       <h2>Shows</h2>
       <div class="section-heading-sub">Perth stages, global intent.</div>
       <p>
-        Building from the ground up — underground rooms, word‑of‑mouth nights, and sets that
+        Building from the ground up — underground rooms, word-of-mouth nights, and sets that
         leave people asking when the next one is.
       </p>
       <div class="shows-list">
@@ -520,11 +575,4 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <span>Perth, Western Australia · <strong>CASTTRO</strong> · 2026</span>
-    <span>It’s not a mask — <strong>it’s a mirror</strong>.</span>
-  </footer>
-
-</div>
-</body>
-</html>
+  <footer class="fo
