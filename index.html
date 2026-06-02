@@ -1,375 +1,280 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CASTTRO</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CASTTRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap"
-      rel="stylesheet"
-    />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #050505; color: #fff; overflow-x: hidden; font-family: Inter, sans-serif; }
+    a { color: inherit; }
 
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+    .intro { position: fixed; inset: 0; z-index: 50; background: #000; cursor: pointer; }
+    .intro video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .intro::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,.45)); }
+    .intro-hint {
+      position: absolute; left: 0; right: 0; bottom: 34px; z-index: 2;
+      text-align: center; font-family: Anton, sans-serif; letter-spacing: .4em;
+      color: rgba(255,255,255,.75); animation: blink 1.8s infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
 
-      html {
-        scroll-behavior: smooth;
-      }
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background-image: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.35)), url("assets/vlcsnap-2026-03-20-18h41m23s856.png");
+      background-size: cover; background-position: center; overflow: hidden;
+    }
+    .topnav {
+      position: absolute; top: 28px; left: 0; right: 0; z-index: 5;
+      display: flex; justify-content: space-around; gap: 14px; padding: 0 40px;
+      font-family: Anton, sans-serif;
+    }
+    .topnav a { color: #f00; text-decoration: none; font-size: clamp(16px, 2.4vw, 38px); }
+    .brand { color: #f00; font-family: Anton, sans-serif; font-size: clamp(86px, 17vw, 280px); line-height: .9; }
 
-      body {
-        background: #050505;
-        color: #fff;
-        overflow-x: hidden;
-      }
+    .transition {
+      position: relative; min-height: 310px; margin-top: -1px;
+      background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.35)), url("assets/transition-texture.jpg");
+      background-size: cover; background-position: center;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .transition::before, .transition::after {
+      content: ""; position: absolute; left: 0; right: 0; height: 90px; background: #050505; z-index: 1;
+      clip-path: polygon(0 0,100% 0,100% 40%,92% 55%,84% 43%,75% 60%,66% 48%,58% 62%,48% 45%,39% 58%,30% 42%,21% 57%,12% 44%,0 60%);
+    }
+    .transition::before { top: -1px; }
+    .transition::after {
+      bottom: -1px; background: #f00; transform: rotate(180deg);
+    }
+    .tagline {
+      position: relative; z-index: 2; padding: 0 22px; text-align: center;
+      color: #fff; font-family: Anton, sans-serif; text-transform: uppercase;
+      font-size: clamp(28px, 5vw, 80px); line-height: 1; text-shadow: 0 4px 18px rgba(0,0,0,.65);
+    }
 
-      .intro {
-        position: fixed;
-        inset: 0;
-        z-index: 20;
-        background: #000;
-        cursor: pointer;
-      }
+    section { position: relative; }
+    .bio {
+      background: #f00; color: #050505; padding: 110px 6vw;
+      display: grid; grid-template-columns: .85fr 1.15fr; gap: 54px;
+    }
+    .section-title { font-family: Anton, sans-serif; font-size: clamp(58px, 10vw, 160px); line-height: .9; text-transform: uppercase; }
+    .bio-meta { margin-top: 18px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+    .stats { margin-top: 44px; display: grid; gap: 18px; }
+    .stat { border-top: 2px solid #050505; padding-top: 14px; }
+    .stat strong { display: block; font-family: Anton, sans-serif; font-size: clamp(38px, 5vw, 80px); line-height: 1; }
+    .stat span { font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
+    .bio-copy p { margin-bottom: 22px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.65; font-weight: 700; }
 
-      .intro-video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
+    .music { background: #050505; padding: 105px 0 110px; }
+    .music-head { padding: 0 6vw 34px; display: flex; justify-content: space-between; align-items: end; gap: 28px; }
+    .music-head p { max-width: 520px; color: rgba(255,255,255,.7); font-weight: 700; line-height: 1.6; }
+    .music-head a { color: #f00; font-weight: 900; text-decoration: none; letter-spacing: .1em; }
+    .track-row { display: flex; gap: 22px; overflow-x: auto; padding: 0 6vw 18px; scroll-snap-type: x mandatory; }
+    .track {
+      min-width: min(78vw, 360px); scroll-snap-align: start; text-decoration: none;
+      color: #fff;
+    }
+    .track img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; filter: saturate(1.05) contrast(1.05); }
+    .track span { display: block; margin-top: 12px; font-family: Anton, sans-serif; color: #f00; font-size: 30px; text-transform: uppercase; }
 
-      .intro-shade {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.05),
-          rgba(0, 0, 0, 0.4)
-        );
-        pointer-events: none;
-      }
+    .visuals { background: #f00; color: #050505; padding: 105px 6vw; }
+    .visual-grid {
+      margin-top: 34px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .visual {
+      border: 0; background: none; cursor: pointer; overflow: hidden; min-height: 260px;
+    }
+    .visual:nth-child(1), .visual:nth-child(4) { grid-row: span 2; }
+    .visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .visual:hover img { transform: scale(1.04); }
 
-      .intro-hint {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 34px;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.75);
-        font-family: "Anton", sans-serif;
-        font-size: 14px;
-        letter-spacing: 0.4em;
-        animation: blink 1.8s ease-in-out infinite;
-      }
+    .contact {
+      min-height: 100vh; background: #f00; color: #050505; padding: 95px 6vw 0;
+      display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+    }
+    .contact-top { display: flex; justify-content: space-between; gap: 40px; align-items: start; }
+    .contact-links { display: grid; gap: 14px; text-align: right; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .contact-links a { text-decoration: none; }
+    .contact-links a:hover { color: #fff; }
+    .contact-mark { width: 112%; margin-left: -6%; margin-bottom: -2px; display: block; opacity: .95; }
 
-      @keyframes blink {
-        0%,
-        100% {
-          opacity: 0.35;
-        }
+    .modal {
+      position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.92); padding: 28px;
+    }
+    .modal.open { display: flex; }
+    .modal img { max-width: 92vw; max-height: 82vh; object-fit: contain; }
+    .modal-actions {
+      position: absolute; top: 22px; right: 22px; display: flex; gap: 12px;
+      font-family: Anton, sans-serif;
+    }
+    .modal-actions button, .modal-actions a {
+      background: #f00; color: #050505; border: 0; padding: 10px 14px;
+      text-decoration: none; font: inherit; cursor: pointer;
+    }
 
-        50% {
-          opacity: 1;
-        }
-      }
+    @media (max-width: 820px) {
+      .topnav { top: 18px; flex-wrap: wrap; justify-content: center; padding: 0 14px; }
+      .bio { grid-template-columns: 1fr; padding: 90px 24px; }
+      .music-head { display: block; padding: 0 24px 30px; }
+      .music-head p { margin: 18px 0; }
+      .track-row { padding: 0 24px 16px; }
+      .visuals { padding: 90px 24px; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .visual, .visual:nth-child(1), .visual:nth-child(4) { grid-row: auto; min-height: 340px; }
+      .contact { padding: 82px 24px 0; }
+      .contact-top { display: block; }
+      .contact-links { margin-top: 30px; text-align: left; }
+      .contact-mark { width: 150%; margin-left: -25%; }
+    }
+  </style>
+</head>
 
-      .hero {
-        position: relative;
-        min-height: 100vh;
-        background-image: linear-gradient(
-            rgba(0, 0, 0, 0.18),
-            rgba(0, 0, 0, 0.35)
-          ),
-          url("assets/vlcsnap-2026-03-20-18h41m23s856.png");
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+<body>
+  <div class="intro" id="intro" role="button" tabindex="0" aria-label="Enter CASTTRO site">
+    <video id="introVideo" src="assets/hero-loop.mp4" autoplay muted playsinline></video>
+    <div class="intro-hint">CLICK TO ENTER</div>
+  </div>
 
-      .topnav {
-        position: absolute;
-        top: 28px;
-        left: 0;
-        right: 0;
-        z-index: 5;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 16px;
-        padding: 0 40px;
-      }
+  <main>
+    <section class="hero" id="home">
+      <nav class="topnav">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#music">MUSIC</a>
+        <a href="#visuals">VISUALS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+      <h1 class="brand">CASTTRO</h1>
+    </section>
 
-      .topnav a {
-        color: #ff0000;
-        font-family: "Anton", sans-serif;
-        font-size: clamp(18px, 2.3vw, 40px);
-        letter-spacing: 0.04em;
-        text-decoration: none;
-      }
+    <section class="transition">
+      <div class="tagline">The mask isn't to hide - it's a mirror.</div>
+    </section>
 
-      .brand {
-        color: #ff0000;
-        font-family: "Anton", sans-serif;
-        font-size: clamp(82px, 17vw, 270px);
-        line-height: 0.9;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        user-select: none;
-      }
+    <section class="bio" id="about">
+      <div>
+        <h2 class="section-title">Artist Bio</h2>
+        <div class="bio-meta">Casttro | Perth, Western Australia</div>
+        <div class="stats">
+          <div class="stat"><strong>60K+</strong><span>Total streams</span></div>
+          <div class="stat"><strong>13K+</strong><span>Monthly listeners</span></div>
+          <div class="stat"><strong>2023</strong><span>WAM Awards recognition</span></div>
+        </div>
+      </div>
 
-      .bio {
-        min-height: 100vh;
-        background: #050505;
-        padding: 96px 6vw;
-        display: grid;
-        grid-template-columns: minmax(0, 0.85fr) minmax(300px, 1.15fr);
-        gap: 56px;
-        align-items: start;
-      }
+      <div class="bio-copy">
+        <p>Casttro is an independent hip-hop artist based in Perth, Western Australia, known for blending raw lyricism with moody, melodic production and a powerful live presence.</p>
+        <p>Driven by storytelling and symbolism, Casttro wears a mask as part of his visual identity - not to conceal, but to reflect. The mask acts as both mirror and canvas, challenging listeners to see themselves in his music.</p>
+        <p>His music explores growth, self-reflection, and cultural identity through layered lyrics and striking aesthetics. With over 60,000 total streams and 13,000+ monthly listeners, Casttro has built a catalogue that continues to resonate.</p>
+        <p>"This beat is naaaaasty, and CASTTRO treated it accordingly." - Jerry Ijale Agbinya, Triple J</p>
+        <p>"Each time I listen, I hear a new lyric that makes me go: UGH THAT WAS SO SMART." - Ash McGregor, Triple J</p>
+      </div>
+    </section>
 
-      .bio-kicker {
-        color: #ff0000;
-        font-family: "Anton", sans-serif;
-        font-size: clamp(52px, 9vw, 150px);
-        line-height: 0.9;
-        text-transform: uppercase;
-      }
-
-      .bio-location {
-        margin-top: 18px;
-        color: rgba(255, 255, 255, 0.68);
-        font-family: "Inter", sans-serif;
-        font-size: 14px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-      }
-
-      .stats {
-        margin-top: 42px;
-        display: grid;
-        gap: 18px;
-      }
-
-      .stat {
-        border-top: 1px solid rgba(255, 0, 0, 0.55);
-        padding-top: 16px;
-      }
-
-      .stat strong {
-        display: block;
-        color: #ff0000;
-        font-family: "Anton", sans-serif;
-        font-size: clamp(34px, 5vw, 72px);
-        line-height: 1;
-      }
-
-      .stat span {
-        color: rgba(255, 255, 255, 0.72);
-        font-family: "Inter", sans-serif;
-        font-size: 13px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .bio-copy {
-        max-width: 820px;
-        font-family: "Inter", sans-serif;
-      }
-
-      .bio-copy p {
-        margin-bottom: 22px;
-        color: rgba(255, 255, 255, 0.86);
-        font-size: clamp(16px, 1.5vw, 21px);
-        line-height: 1.65;
-      }
-
-      .quote-row {
-        margin-top: 42px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
-      }
-
-      .quote {
-        border-left: 4px solid #ff0000;
-        padding: 4px 0 4px 18px;
-      }
-
-      .quote p {
-        margin: 0 0 12px;
-        color: #fff;
-        font-family: "Anton", sans-serif;
-        font-size: clamp(24px, 3vw, 42px);
-        line-height: 1.05;
-      }
-
-      .quote span {
-        color: rgba(255, 255, 255, 0.62);
-        font-family: "Inter", sans-serif;
-        font-size: 13px;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
-      @media (max-width: 820px) {
-        .topnav {
-          top: 18px;
-          flex-wrap: wrap;
-          justify-content: center;
-          padding: 0 16px;
-        }
-
-        .topnav a {
-          font-size: 16px;
-        }
-
-        .bio {
-          grid-template-columns: 1fr;
-          padding: 76px 24px;
-          gap: 36px;
-        }
-
-        .quote-row {
-          grid-template-columns: 1fr;
-        }
-
-        .intro-hint {
-          font-size: 12px;
-          letter-spacing: 0.28em;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div
-      class="intro"
-      id="intro"
-      role="button"
-      tabindex="0"
-      aria-label="Enter CASTTRO site"
-    >
-      <video
-        class="intro-video"
-        id="introVideo"
-        src="assets/hero-loop.mp4"
-        autoplay
-        muted
-        playsinline
-      ></video>
-
-      <div class="intro-shade"></div>
-      <div class="intro-hint">CLICK TO ENTER</div>
-    </div>
-
-    <main>
-      <section class="hero" id="home">
-        <nav class="topnav" aria-label="Primary navigation">
-          <a href="#home">HOME</a>
-          <a href="#about">ABOUT</a>
-          <a href="#music">MUSIC</a>
-          <a href="#visuals">VISUALS</a>
-          <a href="#contact">CONTACT</a>
-        </nav>
-
-        <h1 class="brand">CASTTRO</h1>
-      </section>
-
-      <section class="bio" id="about">
+    <section class="music" id="music">
+      <div class="music-head">
+        <h2 class="section-title">Music</h2>
         <div>
-          <h2 class="bio-kicker">Artist Bio</h2>
-          <div class="bio-location">Casttro | Perth, Western Australia</div>
-
-          <div class="stats">
-            <div class="stat">
-              <strong>60K+</strong>
-              <span>Total streams</span>
-            </div>
-
-            <div class="stat">
-              <strong>13K+</strong>
-              <span>Monthly listeners</span>
-            </div>
-
-            <div class="stat">
-              <strong>2023</strong>
-              <span>WAM Awards - Promise placed 3rd</span>
-            </div>
-          </div>
+          <p>Selected releases from Casttro. For the full catalogue, stream on Spotify and major platforms.</p>
+          <a href="https://open.spotify.com/track/7IwqzjP9GjWTrdkDzc6CL8?si=84b2886e475b4eb8" target="_blank" rel="noreferrer">STREAM CASTTRO</a>
         </div>
+      </div>
 
-        <div class="bio-copy">
-          <p>
-            Casttro is an independent hip-hop artist based in Perth, Western
-            Australia, known for blending raw lyricism with moody, melodic
-            production and a powerful live presence.
-          </p>
+      <div class="track-row">
+        <a class="track" href="https://open.spotify.com/track/7IwqzjP9GjWTrdkDzc6CL8?si=84b2886e475b4eb8" target="_blank" rel="noreferrer"><img src="assets/Point.jpg" alt="Point cover"><span>Point</span></a>
+        <a class="track" href="https://open.spotify.com/track/3jrUNHwlKqFndmP7WDsGYc?si=cae8adf242944918" target="_blank" rel="noreferrer"><img src="assets/labour-or-liberal.png" alt="Labour or Liberal cover"><span>Labour or Liberal</span></a>
+        <a class="track" href="https://open.spotify.com/track/5KfxdfAXp8v0Zu5fZ7QCMg?si=34a93de8004545a9" target="_blank" rel="noreferrer"><img src="assets/man-in-the-mirror.jpg" alt="Man in the Mirror cover"><span>Man in the Mirror</span></a>
+        <a class="track" href="https://open.spotify.com/track/3HvVpcPacjcfPljRO48A4F?si=a4747c2edc924fdd" target="_blank" rel="noreferrer"><img src="assets/step-in-da-room.png" alt="Step in da Room cover"><span>Step in da Room</span></a>
+        <a class="track" href="https://open.spotify.com/track/5Tcoc3oHqpPiunrIrnasf8?si=ccc9e0e521db4d92" target="_blank" rel="noreferrer"><img src="assets/im-him.png" alt="I'm Him cover"><span>I'm Him</span></a>
+        <a class="track" href="https://open.spotify.com/track/6JuifYggM5k7AHTTo1y7VV?si=185f8cf16134464c" target="_blank" rel="noreferrer"><img src="assets/Robin.png" alt="Robin cover"><span>Robin</span></a>
+      </div>
+    </section>
 
-          <p>
-            Driven by storytelling and symbolism, Casttro wears a mask as part
-            of his visual identity - not to conceal, but to reflect. The mask
-            acts as both mirror and canvas, challenging listeners to see
-            themselves in his music and inviting deeper connection through
-            anonymity redefined.
-          </p>
+    <section class="visuals" id="visuals">
+      <h2 class="section-title">Visuals</h2>
+      <div class="visual-grid">
+        <button class="visual"><img src="assets/Visual - 1.jpg" alt="Casttro visual 1"></button>
+        <button class="visual"><img src="assets/Visual - 2.jpg" alt="Casttro visual 2"></button>
+        <button class="visual"><img src="assets/Visual - 3.jpeg" alt="Casttro visual 3"></button>
+        <button class="visual"><img src="assets/Visual - 4.png" alt="Casttro visual 4"></button>
+        <button class="visual"><img src="assets/Visual - 5.jpeg" alt="Casttro visual 5"></button>
+        <button class="visual"><img src="assets/Visual - 6.jpg" alt="Casttro visual 6"></button>
+      </div>
+    </section>
 
-          <p>
-            His music explores growth, self-reflection, and cultural identity
-            through layered lyrics and striking aesthetics. With over 60,000
-            total streams across major platforms and 13,000+ monthly listeners,
-            Casttro has built a catalogue that continues to resonate with
-            audiences and tastemakers.
-          </p>
-
-          <div class="quote-row">
-            <div class="quote">
-              <p>"This beat is naaaaasty, and CASTTRO treated it accordingly."</p>
-              <span>Jerry Ijale Agbinya, Triple J</span>
-            </div>
-
-            <div class="quote">
-              <p>"Each time I listen, I hear a new lyric that makes me go: UGH."</p>
-              <span>Ash McGregor, Triple J</span>
-            </div>
-          </div>
+    <section class="contact" id="contact">
+      <div class="contact-top">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-links">
+          <a href="mailto:castronx@gmail.com">castronx@gmail.com</a>
+          <a href="https://www.instagram.com/official_casttro/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="#music">Music</a>
+          <span>Perth, Western Australia</span>
         </div>
-      </section>
-    </main>
+      </div>
+      <img class="contact-mark" src="assets/contact-casttro.png" alt="CASTTRO">
+    </section>
+  </main>
 
-    <script>
-      const intro = document.getElementById("intro");
-      const video = document.getElementById("introVideo");
+  <div class="modal" id="modal">
+    <div class="modal-actions">
+      <a href="https://www.instagram.com/official_casttro/" target="_blank" rel="noreferrer">INSTAGRAM</a>
+      <button id="closeModal">CLOSE</button>
+    </div>
+    <img id="modalImage" src="" alt="">
+  </div>
 
-      function enterSite() {
-        intro.style.display = "none";
+  <script>
+    const intro = document.getElementById("intro");
+    const video = document.getElementById("introVideo");
+
+    function enterSite() {
+      intro.style.display = "none";
+    }
+
+    intro.addEventListener("click", enterSite);
+    intro.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        enterSite();
       }
+    });
 
-      intro.addEventListener("click", enterSite);
+    video.addEventListener("ended", enterSite);
+    video.play().catch(function () {
+      video.muted = true;
+      video.play().catch(function () {});
+    });
 
-      intro.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          enterSite();
-        }
+    const modal = document.getElementById("modal");
+    const modalImage = document.getElementById("modalImage");
+    const closeModal = document.getElementById("closeModal");
+
+    document.querySelectorAll(".visual img").forEach(function (image) {
+      image.parentElement.addEventListener("click", function () {
+        modalImage.src = image.src;
+        modalImage.alt = image.alt;
+        modal.classList.add("open");
       });
+    });
 
-      video.addEventListener("ended", enterSite);
+    closeModal.addEventListener("click", function () {
+      modal.classList.remove("open");
+      modalImage.src = "";
+    });
 
-      video.play().catch(function () {
-        video.muted = true;
-        video.play().catch(function () {});
-      });
-    </script>
-  </body>
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.classList.remove("open");
+        modalImage.src = "";
+      }
+    });
+  </script>
+</body>
 </html>
